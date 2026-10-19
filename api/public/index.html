@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evidenca vozil · REST odjemalec</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <div><p class="eyebrow">FAKULTETNI PROJEKT / REST API</p><h1>Evidenca vozil</h1></div>
+      <span class="badge">Node.js · Express · PostgreSQL</span>
+    </header>
+    <p class="intro">Dodajte vozilo, preverite podatke in preizkusite vse CRUD operacije. Spremembe se shranjujejo v PostgreSQL.</p>
+    <div id="message" class="message" role="status" aria-live="polite">Nalaganje vozil …</div>
+
+    <section class="card" aria-labelledby="list-title">
+      <div class="section-header">
+        <div><h2 id="list-title">Vozila</h2><p id="list-summary">Seznam še ni naložen.</p></div>
+        <button id="refresh" type="button" class="secondary">Prikaži vsa vozila</button>
+      </div>
+      <form id="search-form" class="search-form">
+        <label for="search-id">Poišči po ID</label>
+        <input id="search-id" type="number" min="1" max="2147483647" step="1" placeholder="npr. 1" required>
+        <button type="submit">Poišči</button>
+      </form>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Tabela vozil">
+        <table>
+          <thead><tr><th>ID</th><th>Registrska oznaka</th><th>Znamka</th><th>Model</th><th>Leto</th><th>Kilometri</th><th>Naslednji pregled</th><th>Dejanji</th></tr></thead>
+          <tbody id="vehicles"><tr><td colspan="8">Nalaganje …</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="columns">
+      <section class="card" aria-labelledby="form-title">
+        <p class="eyebrow" id="form-mode">POST /vozila</p>
+        <h2 id="form-title">Dodaj vozilo</h2>
+        <p>Vsa polja so obvezna.</p>
+        <form id="vehicle-form">
+          <div class="form-grid">
+            <label>Registrska oznaka<input name="registrskaOznaka" required placeholder="LJ AB-123"></label>
+            <label>Znamka<input name="znamka" required placeholder="Renault"></label>
+            <label>Model<input name="model" required placeholder="Clio"></label>
+            <label>Leto izdelave<input name="letoIzdelave" type="number" min="1886" max="2147483647" step="1" required placeholder="2020"></label>
+            <label>Kilometri<input name="kilometri" type="number" min="0" max="2147483647" step="1" required placeholder="45000"></label>
+            <label>Datum naslednjega pregleda<input name="datumNaslednjegaPregleda" type="date" min="0001-01-01" max="9999-12-31" required></label>
+          </div>
+          <div class="actions">
+            <button id="save" type="submit">Dodaj vozilo</button>
+            <button id="cancel" type="button" class="secondary" hidden>Prekliči urejanje</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card api-card" aria-labelledby="api-title">
+        <p class="eyebrow">PREGLED ZAHTEVKOV</p>
+        <h2 id="api-title">Zadnji API klic</h2>
+        <p>Privzeto je prikazan zadnji klic. Po osvežitvi seznama lahko tukaj izberete tudi predhodni POST, PUT ali DELETE.</p>
+        <label for="call-history">Zadnjih 10 klicev</label>
+        <select id="call-history"><option value="">Ni zahtevkov.</option></select>
+        <div class="request-line"><strong id="request-method">—</strong><code id="request-path">—</code><span id="response-status">—</span></div>
+        <h3>Poslani JSON</h3><pre id="request-body">Brez telesa zahtevka.</pre>
+        <h3>Prejeti odgovor</h3><pre id="response-body">Ni odgovora.</pre>
+      </section>
+    </div>
+    <footer>REST CRUD demonstracija · Podatki se berejo in spreminjajo prek dejanskega API-ja.</footer>
+  </main>
+</body>
+</html>
